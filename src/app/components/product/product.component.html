@@ -1,0 +1,101 @@
+<div class="top-container">
+  <span>Add new product</span>
+  <button mat-raised-button color="primary" (click)="onCreate()">Create</button>
+</div>
+
+<div class="mat-elevation-z8" *ngIf="!createMode && !updateMode">
+  <table mat-table [dataSource]="dataSource" matSort>
+
+    <!-- ID Column -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+      <td mat-cell *matCellDef="let row"> {{row.id}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="product name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+      <td mat-cell *matCellDef="let row"> {{row.productName}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="product description">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
+      <td mat-cell *matCellDef="let row"> {{row.productDescription}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="product price">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Price </th>
+      <td mat-cell *matCellDef="let row"> {{row.productPrice}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="edit">
+      <th mat-header-cell *matHeaderCellDef> Edit </th>
+      <td mat-cell *matCellDef="let row">
+        <button mat-icon-button color="primary">
+          <mat-icon (click)="onEdit(row.id, row)">edit</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="delete">
+      <th mat-header-cell *matHeaderCellDef> Delete </th>
+      <td mat-cell *matCellDef="let row">
+        <button mat-icon-button color="warn">
+          <mat-icon (click)="onDelete(row.id)">delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    <!-- Row shown when there is no matching data. -->
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell" colspan="4">No data matching the filter ""</td>
+    </tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+</div>
+
+<div *ngIf="createMode || updateMode">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Product</mat-card-title>
+    </mat-card-header>
+    <form [formGroup]="productFormGroup" (ngSubmit)="onSubmit()">
+      <mat-card-content>
+          <div class="card-form-content">
+            <div>
+              <mat-form-field class="card-form-field" hintLabel="Max 30 characters" appearance="fill">
+                <mat-label>Product name</mat-label>
+                <input matInput [formControl]="productName" #input maxlength="30" placeholder="Ex. Nougat">
+                <mat-hint align="end">{{input.value.length}}/30</mat-hint>
+              </mat-form-field>
+              <mat-form-field class="card-form-field" hintLabel="Price example $10" appearance="fill">
+                <mat-label>Product price</mat-label>
+                <input matInput [formControl]="productPrice" placeholder="Ex. Nougat">
+              </mat-form-field>
+            </div>
+            <div>
+              <mat-form-field class="card-form-field" hintLabel="Image URL" appearance="fill">
+                <mat-label>Product image</mat-label>
+                <input matInput [formControl]="productImage">
+              </mat-form-field>
+            </div>
+            <div>
+              <mat-form-field class="card-form-field" hintLabel="Max 250 characters" appearance="fill">
+                <mat-label>Product description</mat-label>
+                <input matInput [formControl]="productDescription" #input maxlength="250" placeholder="Ex. Some long description">
+                <mat-hint align="end">{{input.value.length}}/250</mat-hint>
+              </mat-form-field>
+            </div>
+          </div>
+      </mat-card-content>
+      <mat-card-actions align="end">
+        <button mat-button color="warn" (click)="onCancel()">Cancel</button>
+        <button mat-raised-button color="primary" type="submit">Submit</button>
+      </mat-card-actions>
+      </form>
+  </mat-card>
+  <pre>{{productFormGroup.value | json}}</pre>
+</div>

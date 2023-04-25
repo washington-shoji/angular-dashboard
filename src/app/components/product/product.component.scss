@@ -1,0 +1,26 @@
+.top-container {
+  margin: 22px 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 22px;
+}
+
+.card-form-content {
+  padding: 20px 0;
+
+  .card-form-field {
+    width: 100%;
+    margin-top: 12px;
+  }
+}
+
+table {
+  width: 100%;
+}
+
+.icon {
+  & :hover {
+    color: red;
+  }
+}
