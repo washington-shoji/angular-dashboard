@@ -16,6 +16,11 @@ export const navbarData: INavbarData[] = [
     label: 'Statistics',
   },
   {
+    routeLink: 'products',
+    icon: 'inventory',
+    label: 'Products',
+  },
+  {
     routeLink: 'settings',
     icon: 'settings',
     label: 'Settings',
